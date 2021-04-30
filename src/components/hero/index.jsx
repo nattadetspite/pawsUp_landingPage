@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { ActionButton } from "../content";
+import { isMobile } from "react-device-detect";
 
 const HeroWrapper = styled.div`
   width: 100vw;
@@ -8,15 +8,19 @@ const HeroWrapper = styled.div`
   height: 50vh;
   position: relative;
   left: 50%;
-  transform: translate(-50%, 0%);
+  margin-bottom: ${(props) => (props.isMobile ? "60vh" : "12vh")};
+  transform: translate(-50%, 4rem);
 `;
 const HeroContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: ${(props) => (props.isMobile ? "center" : "flex-start")};
+  text-align: ${(props) => (props.isMobile ? "center" : "")};
+  align-items: ${(props) => (props.isMobile ? "center" : "")};
+  width: ${(props) => (props.isMobile ? "max-content" : "")};
   position: absolute;
-  top: 40%;
-  left: 20%;
+  top: ${(props) => (props.isMobile ? "140%" : "40%")};
+  left: ${(props) => (props.isMobile ? "50%" : "20%")};
   transform: translate(-50%, -50%);
 `;
 
@@ -43,7 +47,7 @@ const HeroImageWrapper = styled.div`
   background: linear-gradient(0deg, rgba(255, 199, 200, 0.40379901960784315) 0%, rgba(255, 235, 236, 1) 100%);
   border-radius: 0 0 0 10rem;
   position: absolute;
-  left: 40%;
+  left: ${(props) => (props.isMobile ? "0%" : "40%")};
 `;
 const PugImage = styled.img`
   width: auto;
@@ -64,6 +68,10 @@ const Primarybutton = styled.button`
   border: none;
   color: #fff;
 
+  &:hover {
+    background-color: #84c3c8;
+    color: #fff;
+  }
   &:focus {
     outline: 0;
   }
@@ -74,28 +82,30 @@ const Primarybutton = styled.button`
 
 const FootGrey = styled.img`
   position: absolute;
-  left: -20%;
-  top: 70%;
+  transform: ${(props) => (props.isMobile ? "scale(.6)" : "unset")};
+  left: ${(props) => (props.isMobile ? "-70%" : "-20%")};
+  top: ${(props) => (props.isMobile ? "140%" : "70%")};
 `;
 const FootPink = styled.img`
   position: absolute;
+  transform: ${(props) => (props.isMobile ? "scale(.8)" : "unset")};
   left: 20%;
   top: -10%;
 `;
 
 const Hero = () => {
   return (
-    <HeroWrapper>
-      <HeroContentWrapper>
+    <HeroWrapper isMobile={isMobile}>
+      <HeroContentWrapper isMobile={isMobile}>
         <Title>{"What's meant\n to be will always\n find a way."}</Title>
         <Description>{"PawsUp help you to find the best\n partner for your dearest fluffly friend"}</Description>
         <Primarybutton>Find A Match</Primarybutton>
       </HeroContentWrapper>
-      <HeroImageWrapper>
+      <HeroImageWrapper isMobile={isMobile}>
         <FootPink src={"assets/foot_pink.png"} />
         <PugImage src="assets/hero.png" />
       </HeroImageWrapper>
-      <FootGrey src={"assets/foot_grey.png"} />
+      <FootGrey src={"assets/foot_grey.png"} isMobile={isMobile} />
     </HeroWrapper>
   );
 };
